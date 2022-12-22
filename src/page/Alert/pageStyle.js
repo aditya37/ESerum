@@ -1,0 +1,70 @@
+import {StyleSheet} from 'react-native';
+const AlertPageStyle = StyleSheet.create({
+  Container: {
+    backgroundColor: '#FFFFFF',
+    flex: 1,
+  },
+  ContainerTextAlert: {
+    flexDirection: 'column',
+    marginTop: 44,
+    height: 39,
+    left: 13,
+    top:50,
+  },
+  TextAlert: {
+    color: '#000000',
+    fontSize: 32,
+    fontWeight: '700',
+    fontFamily: 'Roboto',
+    fontStyle: 'normal',
+  },
+  AlertContent: {
+    top: 10,
+    color: '#000000',
+    fontWeight: '400',
+    fontFamily: 'Roboto',
+    fontStyle: 'normal',
+    fontSize: 17,
+  },
+  ConatinerActionButton: {
+    flexDirection: 'column',
+    top: 238,
+    left: 17,
+    height: 40,
+    position: 'relative',
+  },
+  ButtonPairAccount: {
+    backgroundColor: '#45AA4A',
+    height: 40,
+    width: 328,
+    borderRadius: 4,
+  },
+  ButtonPairLater: {
+    top: 37,
+    height: 40,
+    width: 328,
+    borderRadius: 4,
+    borderWidth: 1,
+    borderColor: '#45AA4A',
+  },
+  TextPairAccount: {
+    top: 10,
+    textAlign: 'center',
+    fontFamily: 'Roboto',
+    height: 24,
+    fontSize: 14,
+    fontWeight: '500',
+    fontStyle: 'normal',
+  },
+  TextPairLater: {
+    top: 10,
+    textAlign: 'center',
+    fontFamily: 'Roboto',
+    height: 24,
+    fontSize: 14,
+    fontWeight: '500',
+    fontStyle: 'normal',
+    color: '#45AA4A',
+  },
+});
+export default AlertPageStyle;
