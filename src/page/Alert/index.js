@@ -1,13 +1,26 @@
+import {useNavigationState} from '@react-navigation/native';
 import {View, Text, TouchableOpacity} from 'react-native';
 import PageStyle from './pageStyle';
 
 const AlertPage = props => {
+  /**
+   * if state page from login isPairedFromLogin = True
+   * will show device not paired (Opps)
+   * if state page from register isPairedFromLogin = False
+   * will show decision will pairing now or alter
+   */
+  // param from navigate
+  const {isPairedFromLogin} = props.route.params;
   return (
     <View style={PageStyle.Container}>
       <View style={PageStyle.ContainerTextAlert}>
-        <Text style={PageStyle.TextAlert}>Oops,</Text>
+        <Text style={PageStyle.TextAlert}>
+          {isPairedFromLogin ? 'Oops,' : 'Congratulations,'}
+        </Text>
         <Text style={PageStyle.AlertContent}>
-          Your account not paired with IoT device
+          {isPairedFromLogin
+            ? 'Your account not paired with IoT device'
+            : 'Your account success registered'}
         </Text>
         <Text style={PageStyle.AlertContent}>
           are you want to pair your account

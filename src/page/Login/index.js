@@ -10,7 +10,13 @@ const LoginPage = props => {
   };
   const HandleOnClickLogin = e => {
     // TODO: Move with condition
-    props.navigation.replace('alertPage');
+    /**
+     * if state page from login isPairedFromLogin = True
+     * will show device not paired (Opps)
+     * if state page from register isPairedFromLogin = False
+     * will show decision will pairing now or alter
+     */
+    props.navigation.navigate('alertPage', {isPairedFromLogin: true});
   };
   return (
     <View style={PageStyle.Container}>
