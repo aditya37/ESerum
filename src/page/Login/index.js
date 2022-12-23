@@ -3,7 +3,15 @@ import {Input} from 'react-native-elements';
 import {Icon} from '@rneui/base';
 import PageStyle from './pageStyle';
 
-const LoginPage = () => {
+const LoginPage = props => {
+  const HandleOnCLickRegister = e => {
+    // move to another page
+    props.navigation.replace('registerPage');
+  };
+  const HandleOnClickLogin = e => {
+    // TODO: Move with condition
+    props.navigation.replace('alertPage');
+  };
   return (
     <View style={PageStyle.Container}>
       <StatusBar barStyle="dark-content" backgroundColor="#B0BFCA" />
@@ -38,15 +46,18 @@ const LoginPage = () => {
 
         {/* BUtton start*/}
         <View style={PageStyle.ButtonContainer}>
-          <TouchableOpacity style={PageStyle.LoginButton}>
+          <TouchableOpacity
+            style={PageStyle.LoginButton}
+            onPress={HandleOnClickLogin}>
             <Text style={PageStyle.ButtonText}>Login</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={PageStyle.RegisterButton}>
+          <TouchableOpacity
+            style={PageStyle.RegisterButton}
+            onPress={HandleOnCLickRegister}>
             <Text style={PageStyle.RegisterButtonText}>Register</Text>
           </TouchableOpacity>
         </View>
         {/* BUtton End*/}
-        
       </View>
     </View>
   );
