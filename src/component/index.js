@@ -1,2 +1,3 @@
 import HeaderBar from './Header';
-export {HeaderBar};
+import ScanQr from './ScanQR';
+export {HeaderBar, ScanQr};

@@ -16,7 +16,7 @@ const LoginPage = props => {
      * if state page from register isPairedFromLogin = False
      * will show decision will pairing now or alter
      */
-    props.navigation.navigate('alertPage', {isPairedFromLogin: true});
+    props.navigation.replace('alertPage', {isPairedFromLogin: true});
   };
   return (
     <View style={PageStyle.Container}>

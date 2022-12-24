@@ -1,7 +1,7 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import {LoginPage, RegisterPage, AlertPage} from '../page';
+import {LoginPage, RegisterPage, AlertPage,ScanIoTPage} from '../page';
 
 const screenStack = createStackNavigator();
 const Route = () => {
@@ -27,6 +27,12 @@ const Route = () => {
           <screenStack.Screen
             name="alertPage"
             component={AlertPage}
+            options={{headerShown: false}}
+          />
+          {/* ScanIoTPage */}
+          <screenStack.Screen
+            name="scanIoTPage"
+            component={ScanIoTPage}
             options={{headerShown: false}}
           />
         </screenStack.Navigator>
