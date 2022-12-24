@@ -11,6 +11,9 @@ const AlertPage = props => {
    */
   // param from navigate
   const {isPairedFromLogin} = props.route.params;
+  const HandleButtonPairAccount = e => {
+    props.navigation.replace('scanIoTPage');
+  };
   return (
     <View style={PageStyle.Container}>
       <View style={PageStyle.ContainerTextAlert}>
@@ -28,7 +31,9 @@ const AlertPage = props => {
         <Text style={PageStyle.AlertContent}>with IoT device ?</Text>
         {/* button */}
         <View style={PageStyle.ConatinerActionButton}>
-          <TouchableOpacity style={PageStyle.ButtonPairAccount}>
+          <TouchableOpacity
+            style={PageStyle.ButtonPairAccount}
+            onPress={HandleButtonPairAccount}>
             <Text style={PageStyle.TextPairAccount}>PAIR MY ACCOUNT</Text>
           </TouchableOpacity>
           <TouchableOpacity style={PageStyle.ButtonPairLater}>
