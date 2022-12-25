@@ -13,6 +13,7 @@ const ScanIoTPage = props => {
       console.log(val);
     } else {
       console.log('with value');
+      props.navigation.replace('pairingRFIDPage')
     }
   };
   return (

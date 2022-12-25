@@ -1,7 +1,13 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import {LoginPage, RegisterPage, AlertPage,ScanIoTPage} from '../page';
+import {
+  LoginPage,
+  RegisterPage,
+  AlertPage,
+  ScanIoTPage,
+  PairingRFIDPage,
+} from '../page';
 
 const screenStack = createStackNavigator();
 const Route = () => {
@@ -33,6 +39,12 @@ const Route = () => {
           <screenStack.Screen
             name="scanIoTPage"
             component={ScanIoTPage}
+            options={{headerShown: false}}
+          />
+          {/* pairingRFIDPage */}
+          <screenStack.Screen
+            name="pairingRFIDPage"
+            component={PairingRFIDPage}
             options={{headerShown: false}}
           />
         </screenStack.Navigator>
