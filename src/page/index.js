@@ -3,5 +3,12 @@ import RegisterPage from './Register';
 import AlertPage from './Alert';
 import ScanIoTPage from './ScanIoT';
 import PairingRFIDPage from './PairingRFID';
-
-export {LoginPage, RegisterPage, AlertPage, ScanIoTPage, PairingRFIDPage};
+import HomePage from './Home';
+export {
+  LoginPage,
+  RegisterPage,
+  AlertPage,
+  ScanIoTPage,
+  PairingRFIDPage,
+  HomePage,
+};
