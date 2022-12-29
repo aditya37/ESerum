@@ -7,6 +7,7 @@ import {
   AlertPage,
   ScanIoTPage,
   PairingRFIDPage,
+  HomePage,
 } from '../page';
 
 const screenStack = createStackNavigator();
@@ -45,6 +46,12 @@ const Route = () => {
           <screenStack.Screen
             name="pairingRFIDPage"
             component={PairingRFIDPage}
+            options={{headerShown: false}}
+          />
+          {/* home page */}
+          <screenStack.Screen
+            name="homePage"
+            component={HomePage}
             options={{headerShown: false}}
           />
         </screenStack.Navigator>

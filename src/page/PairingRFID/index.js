@@ -39,7 +39,9 @@ const PairingRFIDPage = props => {
           <TouchableOpacity style={PageStyle.ButtonPairing}>
             <Text style={PageStyle.ButtonText}>PAIRING</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={PageStyle.CancelButton}>
+          <TouchableOpacity
+            style={PageStyle.CancelButton}
+            onPress={e => props.navigation.replace('homePage')}>
             <Text style={PageStyle.TxtPairLater}>PAIRING IT LATER</Text>
           </TouchableOpacity>
         </View>
