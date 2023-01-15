@@ -1,4 +1,3 @@
-import {useNavigationState} from '@react-navigation/native';
 import {View, Text, TouchableOpacity} from 'react-native';
 import PageStyle from './pageStyle';
 
@@ -11,7 +10,7 @@ const AlertPage = props => {
    */
   // param from navigate
   const {isPairedFromLogin} = props.route.params;
-  const HandleButtonPairAccount = e => {
+  const HandleButtonPairAccount = (e) => {
     props.navigation.replace('scanIoTPage');
   };
   return (
