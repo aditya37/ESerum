@@ -1,3 +1,4 @@
 import HeaderBar from './Header';
 import ScanQr from './ScanQR';
-export {HeaderBar, ScanQr};
+import AlertDialog from './AlertDialog';
+export {HeaderBar, ScanQr, AlertDialog};
