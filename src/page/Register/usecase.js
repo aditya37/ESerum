@@ -10,24 +10,26 @@ const RegisterUsecase = props => {
 
   const _registerUser = async ({username, password, email, user_role}) => {
     props.registerUser(username, password, email, user_role);
-
-    // store username and password for login
-    // after register account
-    try {
-      await AsyncStorage.setItem('@register_username', username);
-      await AsyncStorage.setItem('@register_password', password);
-    } catch (e) {
-      console.log(e);
-    }
+    setUseCaseState({
+      ..._useCaseState,
+      username: username,
+      password: password,
+    });
   };
+
+  // _hideAlert...
   const _hideAlert = async () => {
+    // hide alert if failed register
     if (!props.stateRegister.isSuccess) {
       props.hideAlert();
     } else {
+      await AsyncStorage.setItem('@register_username', _useCaseState.username);
+      await AsyncStorage.setItem('@register_password', _useCaseState.password);
       await AsyncStorage.setItem('@register_uuid', props.stateRegister.uuid);
       props.hideAlert();
     }
   };
+
   return {
     _registerUser,
     _useCaseState,
