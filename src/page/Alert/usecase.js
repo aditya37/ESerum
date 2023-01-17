@@ -8,20 +8,30 @@ const AlertPairUsecase = props => {
     try {
       const username = await AsyncStorage.getItem('@register_username');
       const password = await AsyncStorage.getItem('@register_password');
+      // if auth type == 2 => login from alert page or after register
       await props.getAccessToken({
         username: username,
         password: password,
+        auth_type: 2,
       });
     } catch (e) {
       console.log(e);
     }
   };
 
-  const _getDevicePairStatus = async () => {
+  const _getDevicePairStatus = async isPairedFromLogin => {
     try {
-      const token = await AsyncStorage.getItem('@access_token_register');
-      const uuid = await AsyncStorage.getItem('@register_uuid');
-      props.getDevicePair(uuid, token);
+      if (isPairedFromLogin) {
+        const token = await AsyncStorage.getItem('@access_token');
+        const uuid = await AsyncStorage.getItem('@user_uuid');
+        props.getDevicePair(uuid, token);
+      } else {
+        const token = await AsyncStorage.getItem('@access_token_register');
+        const uuid = await AsyncStorage.getItem('@register_uuid');
+
+        console.log('token register', token);
+        props.getDevicePair(uuid, token);
+      }
     } catch (e) {
       console.log(e);
     }

@@ -29,6 +29,7 @@ export default (state = initState, action) => {
         isSuccess: true,
         is_paired_rfid: action.payload.is_paired_rfid,
         is_paired_device: action.payload.is_paired_device,
+        disableButton: false
       };
     case FAILED_GET_DEVICE_PAIR: {
       return {
