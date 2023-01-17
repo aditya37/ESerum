@@ -23,8 +23,15 @@ const AlertPage = props => {
   // param from navigate
   const {isPairedFromLogin} = props.route.params;
   useEffect(() => {
-    _getAccessToken();
-    _getDevicePairStatus();
+    // if from login page not get access token from API
+    // only get token from cache
+    if (isPairedFromLogin) {
+      _getDevicePairStatus(isPairedFromLogin);
+    } else {
+      // from register page
+      _getAccessToken();
+      _getDevicePairStatus();
+    }
   }, []);
   const HandleButtonPairAccount = e => {
     props.navigation.replace('scanIoTPage');
@@ -34,17 +41,41 @@ const AlertPage = props => {
     <View style={PageStyle.Container}>
       <View style={PageStyle.ContainerTextAlert}>
         <Text style={PageStyle.TextAlert}>
-          {isPairedFromLogin ? 'Oops,' : 'Congratulations,'}
+          {props.stateGetDevicePair.is_paired_device &&
+          props.stateGetDevicePair.is_paired_rfid &&
+          isPairedFromLogin
+            ? ''
+            : '' || isPairedFromLogin
+            ? 'Oops,'
+            : 'Congratulations,'}
+          {/* {isPairedFromLogin ? 'Oops,' : 'Congratulations,'} */}
         </Text>
         <Text style={PageStyle.AlertContent}>
-          {isPairedFromLogin
+          {/* if device paired not show text error */}
+          {props.stateGetDevicePair.is_paired_device &&
+          props.stateGetDevicePair.is_paired_rfid &&
+          isPairedFromLogin
+            ? ''
+            : '' || isPairedFromLogin
             ? 'Your account not paired with IoT device'
             : 'Your account success registered'}
         </Text>
         <Text style={PageStyle.AlertContent}>
-          are you want to pair your account
+          {/* if device paired not show text error */}
+          {props.stateGetDevicePair.is_paired_device &&
+          props.stateGetDevicePair.is_paired_rfid &&
+          isPairedFromLogin
+            ? ''
+            : 'are you want to pair your account'}
         </Text>
-        <Text style={PageStyle.AlertContent}>with IoT device ?</Text>
+        <Text style={PageStyle.AlertContent}>
+          {/* if device paired not show text error */}
+          {props.stateGetDevicePair.is_paired_device &&
+          props.stateGetDevicePair.is_paired_rfid &&
+          isPairedFromLogin
+            ? ''
+            : 'with IoT device ?'}
+        </Text>
 
         {/* TODO: SHOW ERROR MESSAGE */}
         {props.stateGetDevicePair.showAlert ? (
@@ -90,8 +121,14 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getAccessToken: ({username, password}) => {
-      dispatch(ActionAuth({username: username, password: password}));
+    getAccessToken: ({username, password, auth_type}) => {
+      dispatch(
+        ActionAuth({
+          username: username,
+          password: password,
+          auth_type: auth_type,
+        }),
+      );
     },
     getDevicePair: (uuid, token) => {
       dispatch(GetDevicePair(uuid, token));

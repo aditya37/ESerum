@@ -1,9 +1,16 @@
+import {useEffect} from 'react';
 import {View, StatusBar, Text, TouchableOpacity} from 'react-native';
 import {useScanBarcodes, BarcodeFormat} from 'vision-camera-code-scanner';
+import {connect} from 'react-redux';
 import {ScanQr} from '../../component';
 import PageStyle from './PageStyle';
 
 const ScanIoTPage = props => {
+  useEffect(() => {
+    // hide alert in login page
+    props.hideAlert();
+  }, []);
+
   const [frameProcessor, barcodes] = useScanBarcodes(
     [BarcodeFormat.ALL_FORMATS],
     {checkInverted: true},
@@ -13,7 +20,7 @@ const ScanIoTPage = props => {
       console.log(val);
     } else {
       console.log('with value');
-      props.navigation.replace('pairingRFIDPage')
+      props.navigation.replace('pairingRFIDPage');
     }
   };
   return (
@@ -43,4 +50,17 @@ const ScanIoTPage = props => {
   );
 };
 
-export default ScanIoTPage;
+const mapStateToProps = state => {
+  return {
+    stateUserAuth: state.LoginUserReducer,
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    hideAlert: () => {
+      dispatch({type: 'HIDE_ALERT'});
+    },
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(ScanIoTPage);

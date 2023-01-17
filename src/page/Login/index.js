@@ -1,23 +1,45 @@
-import {StatusBar, View, Text, TouchableOpacity} from 'react-native';
+import {useState, useEffect} from 'react';
+import {
+  StatusBar,
+  View,
+  Text,
+  TouchableOpacity,
+  ActivityIndicator,
+} from 'react-native';
 import {Input} from 'react-native-elements';
 import {Icon} from '@rneui/base';
+import {connect} from 'react-redux';
+import {AlertDialog} from '../../component';
 import PageStyle from './pageStyle';
+import {ActionAuth} from '../../redux/action/auth_user';
+import Usecase from './usecase';
 
+// TODO: handle after login and move to alert pairing device
 const LoginPage = props => {
+  // usecase...
+  const {
+    _actionLogin,
+    _usecaseState,
+    setUsecaseState,
+    _hideAlert,
+    _getStateLogin,
+  } = Usecase(props);
+
+  const [stateRequestLogin, setRequestLogin] = useState({
+    username: '',
+    password: '',
+  });
+
+  useEffect(() => {
+    // if user has been logined will move to alertPage
+    _getStateLogin();
+  }, []);
+
   const HandleOnCLickRegister = e => {
     // move to another page
     props.navigation.replace('registerPage');
   };
-  const HandleOnClickLogin = e => {
-    // TODO: Move with condition
-    /**
-     * if state page from login isPairedFromLogin = True
-     * will show device not paired (Opps)
-     * if state page from register isPairedFromLogin = False
-     * will show decision will pairing now or alter
-     */
-    props.navigation.replace('alertPage', {isPairedFromLogin: true});
-  };
+
   return (
     <View style={PageStyle.Container}>
       <StatusBar barStyle="dark-content" backgroundColor="#B0BFCA" />
@@ -36,10 +58,41 @@ const LoginPage = props => {
 
       {/* form Login */}
       <View style={PageStyle.ContainerFormLogin}>
+        {/* show alert */}
+        {props.stateUserAuth.isSuccess == false &&
+        props.stateUserAuth.isLoading == false ? (
+          <AlertDialog
+            show={props.stateUserAuth.showAlert}
+            title="Login failed"
+            message={props.stateUserAuth.message}
+            onConfirmPressed={() => {
+              _hideAlert();
+            }}
+          />
+        ) : (
+          // alert login success
+          <AlertDialog
+            show={props.stateUserAuth.showAlert}
+            title="Login Success"
+            message="Login Success"
+            type="success"
+            onConfirmPressed={() => {
+              _hideAlert();
+              props.navigation.replace('alertPage', {isPairedFromLogin: true});
+            }}
+          />
+        )}
+
         <Input
           placeholder="username"
           textContentType="username"
           returnKeyType="next"
+          onChangeText={v =>
+            setRequestLogin({
+              ...stateRequestLogin,
+              username: v,
+            })
+          }
           rightIcon={<Icon name="person" color="#BFBFBF" size={24} />}
         />
         <Input
@@ -47,6 +100,12 @@ const LoginPage = props => {
           textContentType="password"
           returnKeyType="done"
           secureTextEntry={true}
+          onChangeText={v =>
+            setRequestLogin({
+              ...stateRequestLogin,
+              password: v,
+            })
+          }
           rightIcon={<Icon name="lock" color="#BFBFBF" size={24} />}
         />
 
@@ -54,8 +113,22 @@ const LoginPage = props => {
         <View style={PageStyle.ButtonContainer}>
           <TouchableOpacity
             style={PageStyle.LoginButton}
-            onPress={HandleOnClickLogin}>
-            <Text style={PageStyle.ButtonText}>Login</Text>
+            onPress={e =>
+              _actionLogin(
+                e,
+                stateRequestLogin.username,
+                stateRequestLogin.password,
+              )
+            }>
+            {props.stateUserAuth.isLoading ? (
+              <ActivityIndicator
+                size="large"
+                color="white"
+                style={PageStyle.ButtonText}
+              />
+            ) : (
+              <Text style={PageStyle.ButtonText}>Login</Text>
+            )}
           </TouchableOpacity>
           <TouchableOpacity
             style={PageStyle.RegisterButton}
@@ -68,4 +141,27 @@ const LoginPage = props => {
     </View>
   );
 };
-export default LoginPage;
+
+const mapStateToProps = state => {
+  return {
+    stateUserAuth: state.LoginUserReducer,
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    UserAuth: ({username, password, auth_type}) => {
+      dispatch(
+        ActionAuth({
+          username: username,
+          password: password,
+          auth_type: auth_type,
+        }),
+      );
+    },
+    hideAlert: () => {
+      dispatch({type: 'HIDE_ALERT'});
+    },
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);
