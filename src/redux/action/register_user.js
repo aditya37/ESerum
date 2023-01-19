@@ -22,12 +22,12 @@ export const ActionRegisterUser =
       data: JSON.stringify(payload),
     })
       .then(resp => {
-        console.log(resp.data);
         dispatch({
           type: SUCCESS_REGISTER_USER,
           payload: {
             code: 201,
             uuid: resp.data.uuid,
+            devicePairToken: resp.data.device_pair_token,
           },
         });
       })

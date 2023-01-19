@@ -42,7 +42,7 @@ const ScanIoTPage = props => {
         {/* button */}
         <TouchableOpacity
           style={PageStyle.NextButton}
-          onPress={e => props.navigation.navigate('loginPage')}>
+          onPress={e => props.navigation.navigate('homePage')}>
           <Text style={PageStyle.ButtonText}>PAIR IT LATER</Text>
         </TouchableOpacity>
       </View>

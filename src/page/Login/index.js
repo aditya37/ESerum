@@ -150,12 +150,11 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    UserAuth: ({username, password, auth_type}) => {
+    UserAuth: ({username, password}) => {
       dispatch(
         ActionAuth({
           username: username,
           password: password,
-          auth_type: auth_type,
         }),
       );
     },

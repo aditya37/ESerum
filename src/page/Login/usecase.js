@@ -11,7 +11,7 @@ const LoginUsecase = props => {
     // login with from page login
     //   if auth type == 2
     // // login with from page register
-    props.UserAuth({username: username, password: password, auth_type: 1});
+    props.UserAuth({username: username, password: password});
   };
 
   const _hideAlert = () => {

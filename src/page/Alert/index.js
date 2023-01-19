@@ -10,8 +10,12 @@ import {useEffect} from 'react';
 
 const AlertPage = props => {
   // import and implement usecase...
-  const {_useCaseState, _getAccessToken, _getDevicePairStatus} =
-    AlertPairUsecase(props);
+  const {
+    _useCaseState,
+    _getDevicePairStatus,
+    _handelButtonPairLater,
+    _handleButtonPairAccount,
+  } = AlertPairUsecase(props);
 
   /**
    * if state page from login isPairedFromLogin = True
@@ -28,14 +32,9 @@ const AlertPage = props => {
     if (isPairedFromLogin) {
       _getDevicePairStatus(isPairedFromLogin);
     } else {
-      // from register page
-      _getAccessToken();
       _getDevicePairStatus();
     }
   }, []);
-  const HandleButtonPairAccount = e => {
-    props.navigation.replace('scanIoTPage');
-  };
 
   return (
     <View style={PageStyle.Container}>
@@ -98,10 +97,12 @@ const AlertPage = props => {
               <TouchableOpacity
                 style={PageStyle.ButtonPairAccount}
                 disabled={props.stateGetDevicePair.disableButton ? true : false}
-                onPress={HandleButtonPairAccount}>
+                onPress={_handleButtonPairAccount}>
                 <Text style={PageStyle.TextPairAccount}>PAIR MY ACCOUNT</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={PageStyle.ButtonPairLater}>
+              <TouchableOpacity
+                style={PageStyle.ButtonPairLater}
+                onPress={_handelButtonPairLater}>
                 <Text style={PageStyle.TextPairLater}>PAIR IT LATER</Text>
               </TouchableOpacity>
             </>
@@ -121,15 +122,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getAccessToken: ({username, password, auth_type}) => {
-      dispatch(
-        ActionAuth({
-          username: username,
-          password: password,
-          auth_type: auth_type,
-        }),
-      );
-    },
     getDevicePair: (uuid, token) => {
       dispatch(GetDevicePair(uuid, token));
     },
