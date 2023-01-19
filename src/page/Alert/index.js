@@ -35,76 +35,106 @@ const AlertPage = props => {
       _getDevicePairStatus();
     }
   }, []);
-
   return (
     <View style={PageStyle.Container}>
       <View style={PageStyle.ContainerTextAlert}>
-        <Text style={PageStyle.TextAlert}>
-          {props.stateGetDevicePair.is_paired_device &&
-          props.stateGetDevicePair.is_paired_rfid &&
-          isPairedFromLogin
-            ? ''
-            : '' || isPairedFromLogin
-            ? 'Oops,'
-            : 'Congratulations,'}
-          {/* {isPairedFromLogin ? 'Oops,' : 'Congratulations,'} */}
-        </Text>
-        <Text style={PageStyle.AlertContent}>
-          {/* if device paired not show text error */}
-          {props.stateGetDevicePair.is_paired_device &&
-          props.stateGetDevicePair.is_paired_rfid &&
-          isPairedFromLogin
-            ? ''
-            : '' || isPairedFromLogin
-            ? 'Your account not paired with IoT device'
-            : 'Your account success registered'}
-        </Text>
-        <Text style={PageStyle.AlertContent}>
-          {/* if device paired not show text error */}
-          {props.stateGetDevicePair.is_paired_device &&
-          props.stateGetDevicePair.is_paired_rfid &&
-          isPairedFromLogin
-            ? ''
-            : 'are you want to pair your account'}
-        </Text>
-        <Text style={PageStyle.AlertContent}>
-          {/* if device paired not show text error */}
-          {props.stateGetDevicePair.is_paired_device &&
-          props.stateGetDevicePair.is_paired_rfid &&
-          isPairedFromLogin
-            ? ''
-            : 'with IoT device ?'}
-        </Text>
-
-        {/* TODO: SHOW ERROR MESSAGE */}
-        {props.stateGetDevicePair.showAlert ? (
-          <AlertDialog
-            show={props.stateGetDevicePair.showAlert}
-            title="Failed Register user"
-            message={props.stateGetDevicePair.message}
-            onConfirmPressed={() => props.hideAlert()}
-          />
-        ) : (
+        {/* if user pressed button next, not show everything */}
+        {_useCaseState.hideText ? (
           ''
+        ) : (
+          <>
+            <Text style={PageStyle.TextAlert}>
+              {props.stateGetDevicePair.is_paired_device &&
+              props.stateGetDevicePair.is_paired_rfid &&
+              isPairedFromLogin
+                ? 'Congratulations,'
+                : '' || isPairedFromLogin
+                ? 'Oops,'
+                : 'Congratulations,'}
+            </Text>
+            <Text style={PageStyle.AlertContent}>
+              {/* if device paired not show text error */}
+              {props.stateGetDevicePair.is_paired_device &&
+              props.stateGetDevicePair.is_paired_rfid &&
+              isPairedFromLogin
+                ? 'Your device and RFID has been paired'
+                : '' || isPairedFromLogin
+                ? 'Your account not paired with IoT device'
+                : 'Your account success registered'}
+            </Text>
+            <Text style={PageStyle.AlertContent}>
+              {/* if device paired not show text error */}
+              {props.stateGetDevicePair.is_paired_device &&
+              props.stateGetDevicePair.is_paired_rfid &&
+              isPairedFromLogin
+                ? 'lets enjoy it'
+                : 'are you want to pair your account'}
+            </Text>
+            <Text style={PageStyle.AlertContent}>
+              {/* if device paired not show text error */}
+              {props.stateGetDevicePair.is_paired_device &&
+              props.stateGetDevicePair.is_paired_rfid &&
+              isPairedFromLogin
+                ? ''
+                : 'with IoT device ?'}
+            </Text>
+
+            {/* alert failed for get device status --start--*/}
+            {props.stateGetDevicePair.showAlert ? (
+              <AlertDialog
+                show={props.stateGetDevicePair.showAlert}
+                title="Failed Get Device status"
+                message={props.stateGetDevicePair.message}
+                onConfirmPressed={() => props.hideAlert()}
+              />
+            ) : (
+              ''
+            )}
+            {/* alert failed for get device status --finish--*/}
+          </>
         )}
 
-        {/* button */}
+        {/* button container*/}
         <View style={PageStyle.ConatinerActionButton}>
-          {props.stateGetDevicePair.isLoading == true ? (
+          {_useCaseState.hideText ? (
             <ActivityIndicator size="large" color="black" />
           ) : (
             <>
-              <TouchableOpacity
-                style={PageStyle.ButtonPairAccount}
-                disabled={props.stateGetDevicePair.disableButton ? true : false}
-                onPress={_handleButtonPairAccount}>
-                <Text style={PageStyle.TextPairAccount}>PAIR MY ACCOUNT</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={PageStyle.ButtonPairLater}
-                onPress={_handelButtonPairLater}>
-                <Text style={PageStyle.TextPairLater}>PAIR IT LATER</Text>
-              </TouchableOpacity>
+              {props.stateGetDevicePair.isLoading == true ? (
+                <ActivityIndicator size="large" color="black" />
+              ) : (
+                <>
+                  <TouchableOpacity
+                    style={PageStyle.ButtonPairAccount}
+                    disabled={
+                      props.stateGetDevicePair.disableButton ? true : false
+                    }
+                    onPress={_handleButtonPairAccount}>
+                    {/*  IF RFID AND DEVICE is paired will change wording NEXT*/}
+                    {/* AND will move to home page */}
+                    <Text style={PageStyle.TextPairAccount}>
+                      {props.stateGetDevicePair.is_paired_device &&
+                      props.stateGetDevicePair.is_paired_rfid &&
+                      isPairedFromLogin
+                        ? 'NEXT'
+                        : 'PAIR MY ACCOUNT'}
+                    </Text>
+                  </TouchableOpacity>
+                  {/*  IF RFID AND DEVICE is paired will hide pair later*/}
+                  {/* if from register this two button will show */}
+                  {props.stateGetDevicePair.is_paired_device &&
+                  props.stateGetDevicePair.is_paired_rfid &&
+                  isPairedFromLogin ? (
+                    ''
+                  ) : (
+                    <TouchableOpacity
+                      style={PageStyle.ButtonPairLater}
+                      onPress={_handelButtonPairLater}>
+                      <Text style={PageStyle.TextPairLater}>PAIR IT LATER</Text>
+                    </TouchableOpacity>
+                  )}
+                </>
+              )}
             </>
           )}
         </View>
