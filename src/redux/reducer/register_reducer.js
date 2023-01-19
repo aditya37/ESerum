@@ -12,6 +12,7 @@ const initState = {
   respCode: 0,
   message: '',
   uuid: '',
+  devicePairToken: '',
 };
 
 export default (state = initState, action) => {
@@ -45,6 +46,7 @@ export default (state = initState, action) => {
         respCode: action.payload.code,
         message: 'success register user',
         uuid: action.payload.uuid,
+        devicePairToken: action.payload.devicePairToken,
       };
     default:
       return state;

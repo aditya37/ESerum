@@ -6,7 +6,7 @@ import {
   FAILED_LOGIN_USER,
 } from './constant';
 export const ActionAuth =
-  ({username, password, auth_type}) =>
+  ({username, password}) =>
   dispatch => {
     dispatch({type: PROCESS_LOGIN_USER});
     const payload = {
@@ -25,7 +25,6 @@ export const ActionAuth =
           payload: {
             accessToken: resp.data.access_token,
             refreshToken: resp.data.refresh_token,
-            authType: auth_type,
             uuid: resp.data.uuid,
           },
         });
