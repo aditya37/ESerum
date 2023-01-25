@@ -1,9 +1,7 @@
 import {View, Text, TouchableOpacity, ActivityIndicator} from 'react-native';
 import {connect} from 'react-redux';
-import {ActionAuth} from '../../redux/action/auth_user';
 import {GetDevicePair} from '../../redux/action/get_device_status';
 import {AlertDialog} from '../../component/index';
-
 import AlertPairUsecase from './usecase';
 import PageStyle from './pageStyle';
 import {useEffect} from 'react';

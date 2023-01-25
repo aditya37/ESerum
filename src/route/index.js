@@ -11,7 +11,6 @@ import {
   PairingRFIDPage,
   HomePage,
 } from '../page';
-
 const screenStack = createStackNavigator();
 const Route = () => {
   return (

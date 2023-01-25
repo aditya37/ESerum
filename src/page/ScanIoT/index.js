@@ -1,28 +1,38 @@
-import {useEffect} from 'react';
-import {View, StatusBar, Text, TouchableOpacity} from 'react-native';
+import {useEffect, useState} from 'react';
+import {
+  View,
+  StatusBar,
+  Text,
+  TouchableOpacity,
+  DeviceEventEmitter,
+} from 'react-native';
 import {useScanBarcodes, BarcodeFormat} from 'vision-camera-code-scanner';
 import {connect} from 'react-redux';
-import {ScanQr} from '../../component';
+import {ScanQr, AlertDialog} from '../../component';
 import PageStyle from './PageStyle';
+import UsecaseScanIot from './usecase';
 
 const ScanIoTPage = props => {
+  const {
+    _prepareCameraAndGetStateMQTT,
+    _useCaseState,
+    ParseValQr,
+    _subscribeEventEmitter,
+    onConfirmPressed,
+  } = UsecaseScanIot(props);
+
   useEffect(() => {
+    _prepareCameraAndGetStateMQTT();
     // hide alert in login page
     props.hideAlert();
+    // _subscribeEventEmitter
+    _subscribeEventEmitter();
   }, []);
 
-  const [frameProcessor, barcodes] = useScanBarcodes(
-    [BarcodeFormat.ALL_FORMATS],
-    {checkInverted: true},
-  );
-  const ParseValQr = (val, index) => {
-    if (val.length == 0) {
-      console.log(val);
-    } else {
-      console.log('with value');
-      props.navigation.replace('pairingRFIDPage');
-    }
-  };
+  const [frameProcessor, barcodes] = useScanBarcodes([BarcodeFormat.QR_CODE], {
+    checkInverted: true,
+  });
+
   return (
     <View style={PageStyle.Container}>
       <StatusBar barStyle="dark-content" backgroundColor="#B0BFCA" />
@@ -34,8 +44,18 @@ const ScanIoTPage = props => {
         </Text>
         <Text style={PageStyle.TextInstruction}>on the iot device</Text>
 
-        {/* camera container */}
-        <ScanQr value={frameProcessor} />
+        <AlertDialog
+          show={_useCaseState.showFailedAlert}
+          message={_useCaseState.message}
+          type={_useCaseState.alertType}
+          title="Failed Pair Device"
+          onConfirmPressed={onConfirmPressed}
+        />
+
+        <ScanQr
+          value={frameProcessor}
+          isPrepare={_useCaseState.loadingCamera}
+        />
         {/* parse barcode value */}
         {ParseValQr(barcodes)}
 
@@ -43,7 +63,11 @@ const ScanIoTPage = props => {
         <TouchableOpacity
           style={PageStyle.NextButton}
           onPress={e => props.navigation.navigate('homePage')}>
-          <Text style={PageStyle.ButtonText}>PAIR IT LATER</Text>
+          <Text style={PageStyle.ButtonText}>
+            {_useCaseState.loadingCamera
+              ? 'Preparing IoT Device....'
+              : 'PAIR IT LATER'}
+          </Text>
         </TouchableOpacity>
       </View>
     </View>

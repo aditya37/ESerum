@@ -38,21 +38,48 @@ const AlertPairUsecase = props => {
     props.navigation.replace('homePage');
   };
 
-  const _handleButtonPairAccount = e => {
-    // if device and rfid paired and press button next
-    // will save to storage session and auto redirect to
-    // home page
-    if (
-      props.stateGetDevicePair.is_paired_device &&
-      props.stateGetDevicePair.is_paired_rfid
-    ) {
-      AsyncStorage.setItem('@alert_page_next', 'true');
-      // wait in 100 ms
-      setTimeout(() => {
-        props.navigation.replace('homePage');
-      }, 100);
-    } else {
-      props.navigation.replace('scanIoTPage');
+  const _handleButtonPairAccount = async e => {
+    try {
+      // if device and rfid paired and press button next
+      // will save to storage session and auto redirect to
+      // home page
+      if (
+        props.stateGetDevicePair.is_paired_device &&
+        props.stateGetDevicePair.is_paired_rfid
+      ) {
+        AsyncStorage.setItem('@alert_page_next', 'true');
+        // wait in 100 ms
+        setTimeout(() => {
+          props.navigation.replace('homePage');
+        }, 100);
+      } else {
+        const uuid = await AsyncStorage.getItem('@user_uuid');
+        const accessToken = await AsyncStorage.getItem('@access_token');
+        const register_uuid = await AsyncStorage.getItem('@register_uuid');
+        const device_pair_token = await AsyncStorage.getItem(
+          '@device_pair_token',
+        );
+        
+        // if pair device alert from login will show data from login
+        const {isPairedFromLogin} = props.route.params;
+        if (isPairedFromLogin) {
+          props.navigation.replace('scanIoTPage', {
+            uuid: uuid,
+            register_uuid: null,
+            access_token: accessToken,
+            device_pair_token: null,
+          });
+        } else {
+          props.navigation.replace('scanIoTPage', {
+            uuid: null,
+            register_uuid: register_uuid,
+            access_token: null,
+            device_pair_token: device_pair_token,
+          });
+        }
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
