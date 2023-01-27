@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, ActivityIndicator, Text} from 'react-native';
 import 'react-native-reanimated';
 import {useCameraDevices, Camera} from 'react-native-vision-camera';
 
@@ -15,21 +15,26 @@ const ScanQr = props => {
     })();
   }, []);
 
-  const {value} = props;
-  return (
-    device != null &&
-    hasPermission && (
-      <View style={CameraStyle.CameraContainer}>
-        <Camera
-          device={device}
-          isActive={true}
-          frameProcessorFps="auto"
-          frameProcessor={value}
-          style={{height: '70%', width: '100%'}}
-        />
-        {/* return barcodes value to props */}
-      </View>
-    )
+  const {value, isPrepare} = props;
+  return device != null && hasPermission ? (
+    <View style={CameraStyle.CameraContainer}>
+      {isPrepare ? (
+        <ActivityIndicator size="large" color="black" />
+      ) : (
+        <>
+          <Camera
+            device={device}
+            isActive={true}
+            frameProcessorFps={5}
+            frameProcessor={value}
+            style={{height: '70%', width: '100%'}}
+          />
+        </>
+      )}
+      {/* return barcodes value to props */}
+    </View>
+  ) : (
+    ''
   );
 };
 
