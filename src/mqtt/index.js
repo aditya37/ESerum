@@ -29,8 +29,14 @@ class mqttClient {
     client.onConnected = this._onConnected;
     client.isConnected;
     client.onMessageArrived = msg => {
-      DeviceEventEmitter.emit('subscribe', msg.payloadString);
+      const {event_type} = JSON.parse(msg.payloadString)
+      if (event_type == 1) {
+        DeviceEventEmitter.emit('subscribe_event_type_pair_device', msg.payloadString);
+      }else if (event_type == 2) {
+        DeviceEventEmitter.emit('subscribe_event_type_pair_rfid', msg.payloadString);
+      }
     };
+    client.unsubscribe = this.unsubscribe;
     return client;
   }
 
@@ -61,6 +67,9 @@ class mqttClient {
   }
   static isConnected() {
     return this.mqttInstance.isConnected();
+  }
+  static unsubscribe(topic) {
+    this.mqttInstance.unsubscribe(topic);
   }
 }
 

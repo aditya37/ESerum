@@ -1,8 +1,26 @@
 import {View, StatusBar, Text, TouchableOpacity} from 'react-native';
 import {Icon} from '@rneui/base';
 import {Input} from 'react-native-elements';
+import {connect} from 'react-redux';
 import PageStyle from './PageStyle';
+import {AlertDialog} from '../../component';
+import PairRFIDUsecase from './usecase';
+import {useEffect} from 'react';
+
 const PairingRFIDPage = props => {
+  const {
+    _subscribeTopicPairRfid,
+    _handleButtonPairRfid,
+    _onChageTextValueRFID,
+    usecaseState,
+    onConfirmPressed,
+    _subscribeResponsePairRfid,
+  } = PairRFIDUsecase(props);
+  useEffect(() => {
+    _subscribeTopicPairRfid();
+    // _subscribeResponsePairRfid from device emiter...
+    _subscribeResponsePairRfid();
+  }, []);
   return (
     <View style={PageStyle.Container}>
       <StatusBar barStyle="dark-content" backgroundColor="#B0BFCA" />
@@ -14,6 +32,13 @@ const PairingRFIDPage = props => {
         <Text style={PageStyle.TxtGuide}>button on device</Text>
         {/* pass value rfid  start */}
         <View style={PageStyle.InputValueRfidContainer}>
+          <AlertDialog
+            show={usecaseState.showAlert}
+            onConfirmPressed={onConfirmPressed}
+            title={usecaseState.title}
+            message={usecaseState.message}
+            type={usecaseState.alertType}
+          />
           <Text
             style={{
               color: '#000000',
@@ -30,13 +55,16 @@ const PairingRFIDPage = props => {
             style={{marginTop: 35}}
             returnKeyType="done"
             textContentType="name"
+            onChangeText={_onChageTextValueRFID}
             rightIcon={<Icon name="lock" color="#BFBFBF" size={24} />}
           />
         </View>
 
         {/* Button Conatiner Start */}
         <View style={PageStyle.ButtonContainer}>
-          <TouchableOpacity style={PageStyle.ButtonPairing}>
+          <TouchableOpacity
+            style={PageStyle.ButtonPairing}
+            onPress={_handleButtonPairRfid}>
             <Text style={PageStyle.ButtonText}>PAIRING</Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -51,4 +79,10 @@ const PairingRFIDPage = props => {
   );
 };
 
-export default PairingRFIDPage;
+const mapStateToProps = state => {
+  return {};
+};
+const mapDispatchToProps = dispatch => {
+  return {};
+};
+export default connect(mapStateToProps, mapDispatchToProps)(PairingRFIDPage);

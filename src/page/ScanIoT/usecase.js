@@ -92,21 +92,40 @@ const UsecaseScanIot = props => {
   //_subscribeEventEmitter...
   const _subscribeEventEmitter = () => {
     // emit listener
-    DeviceEventEmitter.addListener('subscribe', function (data) {
-      const resp = JSON.parse(data);
-      console.log(resp);
-      if (resp.code == 400) {
-        setUseCaseState({
-          showFailedAlert: true,
-          message: resp.message,
-        });
-      } else {
-        setUseCaseState({
-          showFailedAlert: false,
-        });
-        props.navigation.replace('pairingRFIDPage');
-      }
-    });
+    DeviceEventEmitter.addListener(
+      'subscribe_event_type_pair_device',
+      function (data) {
+        const resp = JSON.parse(data);
+        if (resp.code == 400) {
+          setUseCaseState({
+            showFailedAlert: true,
+            message: resp.message,
+          });
+        } else {
+          setUseCaseState({
+            showFailedAlert: false,
+          });
+          // parse uuid from param...
+          const {register_uuid, uuid, access_token, device_pair_token} =
+            props.route.params;
+          if (register_uuid != null) {
+            props.navigation.replace('pairingRFIDPage', {
+              uuid: null,
+              register_uuid: register_uuid,
+              access_token: null,
+              device_pair_token: device_pair_token,
+            });
+          } else {
+            props.navigation.replace('pairingRFIDPage', {
+              uuid: uuid,
+              register_uuid: null,
+              access_token: access_token,
+              device_pair_token: null,
+            });
+          }
+        }
+      },
+    );
   };
 
   return {

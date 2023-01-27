@@ -4,7 +4,6 @@ import {
   StatusBar,
   Text,
   TouchableOpacity,
-  DeviceEventEmitter,
 } from 'react-native';
 import {useScanBarcodes, BarcodeFormat} from 'vision-camera-code-scanner';
 import {connect} from 'react-redux';
