@@ -1,8 +1,10 @@
 import React from 'react';
 import {Provider} from 'react-redux';
-import {store} from "../redux/store"
+import {store} from '../redux/store';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
+import BottomNavigation from './bottomNavigation';
+
 import {
   LoginPage,
   RegisterPage,
@@ -54,7 +56,7 @@ const Route = () => {
             {/* home page */}
             <screenStack.Screen
               name="homePage"
-              component={HomePage}
+              component={BottomNavigation}
               options={{headerShown: false}}
             />
           </screenStack.Navigator>
