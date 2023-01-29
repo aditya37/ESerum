@@ -4,6 +4,7 @@ import AlertPage from './Alert';
 import ScanIoTPage from './ScanIoT';
 import PairingRFIDPage from './PairingRFID';
 import HomePage from './Home';
+import IoTMonitoringPage from './IoTMonitoring';
 export {
   LoginPage,
   RegisterPage,
@@ -11,4 +12,5 @@ export {
   ScanIoTPage,
   PairingRFIDPage,
   HomePage,
+  IoTMonitoringPage,
 };
