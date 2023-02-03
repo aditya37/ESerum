@@ -25,6 +25,7 @@ const AlertPage = props => {
   // param from navigate
   const {isPairedFromLogin} = props.route.params;
   useEffect(() => {
+
     // if from login page not get access token from API
     // only get token from cache
     if (isPairedFromLogin) {

@@ -1,6 +1,7 @@
 import {DeviceEventEmitter} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import mqtt from 'react_native_mqtt';
+import crashlytics from '@react-native-firebase/crashlytics';
 
 class mqttClient {
   static mqttInstance = null;
@@ -24,6 +25,7 @@ class mqttClient {
       useSSL: false,
       onFailure: () => {
         console.log('gagal');
+        crashlytics().recordError(new Error("failed to connect mqtt"))
       },
     });
     client.onConnected = this._onConnected;
