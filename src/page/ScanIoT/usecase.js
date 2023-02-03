@@ -1,6 +1,7 @@
 import {useState} from 'react';
 import {DeviceEventEmitter} from 'react-native';
 import mqttinstance from '../../mqtt';
+import crashlytics from '@react-native-firebase/crashlytics';
 
 const UsecaseScanIot = props => {
   // state usecase...
@@ -32,6 +33,7 @@ const UsecaseScanIot = props => {
       }
       console.log('ready...');
     } else {
+      crashlytics().log("not ready subscribe device pair")
       console.log('not ready...');
     }
   };

@@ -79,6 +79,7 @@ const AlertPairUsecase = props => {
         }
       }
     } catch (error) {
+      crashlytics().recordError(error,"_handleButtonPairAccount")
       console.log(error);
     }
   };

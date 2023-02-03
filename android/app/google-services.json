@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "913492775301",
+    "project_id": "esetrum-55fdc",
+    "storage_bucket": "esetrum-55fdc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:913492775301:android:d78b4717c4d07e267f74ec",
+        "android_client_info": {
+          "package_name": "com.esetrum"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "913492775301-4gmoc6cigf2u7o95rjac8bq1hs4tdlhu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyARih8_5zbxvrR7PAMKZxiMASgYjhhfs-I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "913492775301-4gmoc6cigf2u7o95rjac8bq1hs4tdlhu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
