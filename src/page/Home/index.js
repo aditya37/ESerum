@@ -2,7 +2,38 @@ import {View, Text, ScrollView} from 'react-native';
 import {DataTable} from 'react-native-paper';
 import {HeaderBar} from '../../component';
 import PageStyle from './PageStyle';
+import mqttinstance from '../../mqtt';
+import {DeviceEventEmitter} from 'react-native';
+import {useEffect, useState} from 'react';
+
 const HomePage = props => {
+  useState;
+  const [state, setstate] = useState({
+    temperature: 0,
+    electrical_usage: 0,
+    rfid_value: '',
+    saldo: 0,
+  });
+  useEffect(() => {
+    mqttinstance._subscribe(
+      '/user/monitoring/0b062996-10f0-434c-8d8c-128bbfacee37/device/iot.3f65ac60-f03c-40ab-bc0a-1bbbe965f68b',
+      0,
+    );
+    DeviceEventEmitter.addListener(
+      'subscribe_event_type_device_monitoring',
+      payload => {
+        console.log('from emiter', payload);
+        const resp = JSON.parse(payload);
+        setstate({
+          ...state,
+          saldo: resp.saldo,
+          temperature: resp.temperature,
+          electrical_usage: resp.kwh,
+          rfid_value: resp.rfid_value,
+        });
+      },
+    );
+  }, []);
   return (
     <View style={PageStyle.Container}>
       <HeaderBar text="Hallo,User" />
@@ -12,15 +43,19 @@ const HomePage = props => {
         <View style={PageStyle.ContainerCard}>
           <View>
             <Text style={PageStyle.TextCardNumber}>Card Number</Text>
-            <Text style={PageStyle.TextValCardNumber}>2022-05-2021-2022</Text>
+            <Text style={PageStyle.TextValCardNumber}>{state.rfid_value}</Text>
             <Text style={PageStyle.TextCardSaldo}>Saldo</Text>
-            <Text style={PageStyle.TextValSaldo}>Rp. 2000.000</Text>
+            <Text style={PageStyle.TextValSaldo}>Rp. {state.saldo}</Text>
           </View>
           <View style={{marginLeft: 50}}>
             <Text style={PageStyle.TextElectricalUsage}>Electrical Usage</Text>
-            <Text style={PageStyle.TextValElectricalUsage}>10 KWH</Text>
+            <Text style={PageStyle.TextValElectricalUsage}>
+              {state.electrical_usage} KWH
+            </Text>
             <Text style={PageStyle.TextDeviceTemp}>Device Temp</Text>
-            <Text style={PageStyle.TextValDeviceTemp}>10 C</Text>
+            <Text style={PageStyle.TextValDeviceTemp}>
+              {state.temperature} C
+            </Text>
             <Text style={PageStyle.TextDeviceStatus}>Status</Text>
             <Text style={PageStyle.TextValDeviceStatus}>UNPLUGGED</Text>
           </View>

@@ -36,6 +36,8 @@ class mqttClient {
         DeviceEventEmitter.emit('subscribe_event_type_pair_device', msg.payloadString);
       }else if (event_type == 2) {
         DeviceEventEmitter.emit('subscribe_event_type_pair_rfid', msg.payloadString);
+      }else if (event_type == 3) {
+        DeviceEventEmitter.emit('subscribe_event_type_device_monitoring', msg.payloadString);
       }
     };
     client.unsubscribe = this.unsubscribe;

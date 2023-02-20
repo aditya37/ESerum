@@ -1,9 +1,10 @@
-import axios from 'axios';
+import AxiosInstance from '../../utils/axiosInterceptor';
 import {
   REGISTER_PATH,
   PROCESS_REGISTER_USER,
   FAILED_REGISTER_USER,
   SUCCESS_REGISTER_USER,
+  USER_MANAGEMENT_BASE_URL,
 } from './constant';
 
 export const ActionRegisterUser =
@@ -16,8 +17,9 @@ export const ActionRegisterUser =
     };
     dispatch({type: PROCESS_REGISTER_USER});
 
-    axios({
+    AxiosInstance({
       method: 'POST',
+      baseURL: USER_MANAGEMENT_BASE_URL,
       url: REGISTER_PATH,
       data: JSON.stringify(payload),
     })
