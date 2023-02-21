@@ -21,14 +21,12 @@ const AlertPairUsecase = props => {
             props.navigation.replace('homePage');
           }, 100);
         } else {
-          const token = await AsyncStorage.getItem('@access_token');
           const uuid = await AsyncStorage.getItem('@user_uuid');
-          props.getDevicePair(uuid, token);
+          props.getDevicePair(uuid);
         }
       } else {
-        const token = await AsyncStorage.getItem('@device_pair_token');
         const uuid = await AsyncStorage.getItem('@register_uuid');
-        props.getDevicePair(uuid, token);
+        props.getDevicePair(uuid);
       }
     } catch (e) {
       console.log(e);

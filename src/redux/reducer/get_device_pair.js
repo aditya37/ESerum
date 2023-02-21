@@ -9,6 +9,7 @@ const initState = {
   isSuccess: false,
   is_paired_rfid: false,
   is_paired_device: false,
+  device_id: "",
   disableButton: false,
   message: '',
   showAlert: false
@@ -29,6 +30,7 @@ export default (state = initState, action) => {
         isSuccess: true,
         is_paired_rfid: action.payload.is_paired_rfid,
         is_paired_device: action.payload.is_paired_device,
+        device_id: action.payload.device_id,
         disableButton: false
       };
     case FAILED_GET_DEVICE_PAIR: {

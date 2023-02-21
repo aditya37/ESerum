@@ -25,7 +25,6 @@ const AlertPage = props => {
   // param from navigate
   const {isPairedFromLogin} = props.route.params;
   useEffect(() => {
-
     // if from login page not get access token from API
     // only get token from cache
     if (isPairedFromLogin) {
@@ -151,8 +150,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getDevicePair: (uuid, token) => {
-      dispatch(GetDevicePair(uuid, token));
+    getDevicePair: uuid => {
+      dispatch(GetDevicePair(uuid));
     },
     hideAlert: () => {
       dispatch({type: 'HIDE_ALERT'});

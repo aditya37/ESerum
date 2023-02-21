@@ -1,10 +1,12 @@
-import axios from 'axios';
 import {
   PROCESS_LOGIN_USER,
   AUTH_USER_PATH,
   SUCCESS_LOGIN_USER,
   FAILED_LOGIN_USER,
+  USER_MANAGEMENT_BASE_URL,
 } from './constant';
+import AxiosInstance from '../../utils/axiosInterceptor';
+
 export const ActionAuth =
   ({username, password}) =>
   dispatch => {
@@ -14,8 +16,10 @@ export const ActionAuth =
       password: password,
     };
 
-    axios({
+    // instance axios with interceptor...
+    AxiosInstance({
       url: AUTH_USER_PATH,
+      baseURL: USER_MANAGEMENT_BASE_URL,
       method: 'POST',
       data: JSON.stringify(payload),
     })
