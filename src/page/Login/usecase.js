@@ -20,7 +20,9 @@ const LoginUsecase = props => {
 
   const _getStateLogin = async () => {
     const stateLogin = await AsyncStorage.getItem('@is_login');
-    if (stateLogin == "true" && stateLogin != null) {
+    if (stateLogin == 'true' && stateLogin != null) {
+      // clear uuid from register....
+      let clearUUIDRegister = await AsyncStorage.removeItem('@register_uuid');
       /**
        * if state page from login isPairedFromLogin = True
        * will show device not paired (Opps)

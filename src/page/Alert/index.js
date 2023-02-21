@@ -142,7 +142,6 @@ const AlertPage = props => {
 };
 
 const mapStateToProps = state => {
-  console.log(state.GetDevicePairReducer)
   return {
     stateGetAccessToken: state.LoginUserReducer,
     stateGetDevicePair: state.GetDevicePairReducer,
