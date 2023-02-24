@@ -23,11 +23,14 @@ const ActionRefreshToken = async () => {
       },
     })
       .then(resp => {
+        console.log('[resp action refresh token]', resp);
         AsyncStorage.setItem('@access_token', resp.data.access_token);
         AsyncStorage.setItem('@refresh_token', resp.data.refresh_token);
         resolve(resp);
       })
       .catch(err => {
+        // if refresh token return response 401 trigger event to relogin
+        console.log('[resp error action refresh token]', err.response);
         reject(err);
       });
   });
@@ -52,12 +55,14 @@ AxiosInstance.interceptors.request.use(
     return resp;
   },
   err => {
+    console.log("[Err Request interceptor] ",err)
     return Promise.reject(err);
   },
 );
 // response interceptor...
 AxiosInstance.interceptors.response.use(
   resp => {
+    console.log('[response interceptor]', resp);
     // get access token from login...
     if (resp.status == 200 && resp.config.url == 'user/') {
       const {access_token, refresh_token, uuid} = resp.data;
@@ -72,9 +77,9 @@ AxiosInstance.interceptors.response.use(
     }
   },
   err => {
+    console.log('[err response interceptor]', err);
     // will refresh token not in url "user/" (user login)
     if (err.response.status == 401 && err.response.config.url != 'user/') {
-      // TODO: AUTO REFRESH TOKEN WITHOUT CLOSE APP
       // TRIGGER REFRESH TOKEN...
       return ActionRefreshToken()
         .then(resp => {

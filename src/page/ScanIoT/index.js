@@ -1,10 +1,5 @@
 import {useEffect, useState} from 'react';
-import {
-  View,
-  StatusBar,
-  Text,
-  TouchableOpacity,
-} from 'react-native';
+import {View, StatusBar, Text, TouchableOpacity} from 'react-native';
 import {useScanBarcodes, BarcodeFormat} from 'vision-camera-code-scanner';
 import {connect} from 'react-redux';
 import {ScanQr, AlertDialog} from '../../component';
@@ -12,6 +7,7 @@ import PageStyle from './PageStyle';
 import UsecaseScanIot from './usecase';
 
 const ScanIoTPage = props => {
+  // usecase....
   const {
     _prepareCameraAndGetStateMQTT,
     _useCaseState,

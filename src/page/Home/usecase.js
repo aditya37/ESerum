@@ -32,7 +32,12 @@ const HomePageUsecase = props => {
       },
     );
   };
-  return {_getDevicePairStatus, _subscribeDeviceMonitoring, usecaseState};
+
+  return {
+    _getDevicePairStatus,
+    _subscribeDeviceMonitoring,
+    usecaseState,
+  };
 };
 
 export default HomePageUsecase;
