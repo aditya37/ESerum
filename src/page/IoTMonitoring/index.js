@@ -2,6 +2,7 @@ import {View, Text, InteractionManager, ActivityIndicator} from 'react-native';
 import {useEffect} from 'react';
 import {connect} from 'react-redux';
 import CircularProgress from 'react-native-circular-progress-indicator';
+import {useIsFocused} from '@react-navigation/native';
 import pageStyle from './style';
 import {HeaderBar, SensorGauge} from '../../component';
 import {GetDevicePair} from '../../redux/action/get_device_status';
@@ -18,7 +19,11 @@ const IoTMonitoringPage = props => {
     _getDevicePairStatus,
     _ListenMQTTSensorMonitoring,
     ErrorDeviceNoTPair,
+    LoadingGetDevicePair,
   } = IoTMonitoringCase(props);
+
+  // refresh if bottom navigation focused/change
+  const isFocused = useIsFocused();
 
   useEffect(() => {
     // get device pair status...
@@ -29,22 +34,31 @@ const IoTMonitoringPage = props => {
 
     // reanimate ref....
     InteractionManager.runAfterInteractions(() => {
-      progressRef.current.reAnimate();
-      tempRef.current.reAnimate();
-      batteryUsageRef.current.reAnimate();
-      KWHUsageRef.current.reAnimate();
+      if (progressRef.current != null) {
+        progressRef.current.reAnimate();
+        tempRef.current.reAnimate();
+        batteryUsageRef.current.reAnimate();
+        KWHUsageRef.current.reAnimate();
+      }
     });
-  }, []);
+  }, [isFocused]);
 
   return (
     // container start
     <View style={pageStyle.Container}>
       {/* header bar... */}
       <HeaderBar text="Device Monitoring" type="iot-device" />
-      {/* check or validate device pairing status */}
-      {props.stateGetDevicePair.is_paired_rfid == false ||
-      props.stateGetDevicePair.is_paired_device ? (
-        <ErrorDeviceNoTPair />
+      {/*loading device pairing status */}
+      {(props.stateGetDevicePair.is_paired_rfid == false &&
+        props.stateGetDevicePair.isLoading) ||
+      (props.stateGetDevicePair.is_paired_device == false &&
+        props.stateGetDevicePair.isLoading) ? (
+        <LoadingGetDevicePair />
+      ) : (props.stateGetDevicePair.is_paired_rfid == false &&
+          !props.stateGetDevicePair.isLoading) ||
+        (props.stateGetDevicePair.is_paired_device == false &&
+          !props.stateGetDevicePair.isLoading) ? (
+        <ErrorDeviceNoTPair /> // {/* check or validate device pairing status */}
       ) : (
         <>
           {/* Content */}

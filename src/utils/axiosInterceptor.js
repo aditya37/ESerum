@@ -55,6 +55,7 @@ AxiosInstance.interceptors.request.use(
     return resp;
   },
   err => {
+    console.log("[Err Request interceptor] ",err)
     return Promise.reject(err);
   },
 );

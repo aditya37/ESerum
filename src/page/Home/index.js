@@ -2,22 +2,22 @@ import {View, Text} from 'react-native';
 import {useEffect} from 'react';
 import {connect} from 'react-redux';
 import {DataTable} from 'react-native-paper';
+import {useIsFocused} from '@react-navigation/native';
 import {HeaderBar, AlertDialog} from '../../component';
 import PageStyle from './PageStyle';
 import {GetDevicePair} from '../../redux/action/get_device_status';
 import homepageUsecase from './usecase';
 
 const HomePage = props => {
-  const {
-    _getDevicePairStatus,
-    _subscribeDeviceMonitoring,
-    usecaseState,
-  } = homepageUsecase(props);
+  const {_getDevicePairStatus, _subscribeDeviceMonitoring, usecaseState} =
+    homepageUsecase(props);
 
+  // refresh if bottom navigation focused/change
+  const isFocused = useIsFocused();
   useEffect(() => {
     _getDevicePairStatus();
     _subscribeDeviceMonitoring();
-  }, []);
+  }, [isFocused]);
   return (
     <View style={PageStyle.Container}>
       <HeaderBar text="Hallo,User" type="home" />
