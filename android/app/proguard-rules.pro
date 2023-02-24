@@ -8,3 +8,6 @@
 #   http://developer.android.com/guide/developing/tools/proguard.html
 
 # Add any project specific keep options here:
+
+# for react native chart kit...
+-keep public class com.horcrux.svg.** {*;}

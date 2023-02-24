@@ -24,6 +24,9 @@ const HeaderBar = props => {
           }}
         />
       ) : (
+        ''
+      )}
+      {type == 'home' ? (
         <Header
           placement="left"
           containerStyle={{
@@ -48,6 +51,36 @@ const HeaderBar = props => {
             },
           }}
         />
+      ) : (
+        ''
+      )}
+      {type == 'iot-device' ? (
+        <Header
+          placement="left"
+          containerStyle={{
+            backgroundColor: '#FFFFFF',
+            height: 75,
+          }}
+          rightComponent={{
+            icon: 'timeline',
+            color: '#1A73E9',
+            size: 30,
+            onPress: () => {
+              console.log("press")
+            }
+          }}
+          centerComponent={{
+            text: props.text,
+            style: {
+              fontSize: 20,
+              fontFamily: 'Roboto',
+              fontWeight: '500',
+              fontStyle: 'normal',
+            },
+          }}
+        />
+      ) : (
+        ''
       )}
     </View>
   );

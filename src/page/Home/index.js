@@ -1,15 +1,18 @@
-import {View, Text, ScrollView} from 'react-native';
-import {useEffect, useState} from 'react';
+import {View, Text} from 'react-native';
+import {useEffect} from 'react';
 import {connect} from 'react-redux';
 import {DataTable} from 'react-native-paper';
-import {HeaderBar} from '../../component';
+import {HeaderBar, AlertDialog} from '../../component';
 import PageStyle from './PageStyle';
 import {GetDevicePair} from '../../redux/action/get_device_status';
 import homepageUsecase from './usecase';
 
 const HomePage = props => {
-  const {_getDevicePairStatus, _subscribeDeviceMonitoring, usecaseState} =
-    homepageUsecase(props);
+  const {
+    _getDevicePairStatus,
+    _subscribeDeviceMonitoring,
+    usecaseState,
+  } = homepageUsecase(props);
 
   useEffect(() => {
     _getDevicePairStatus();
@@ -17,7 +20,7 @@ const HomePage = props => {
   }, []);
   return (
     <View style={PageStyle.Container}>
-      <HeaderBar text="Hallo,User" />
+      <HeaderBar text="Hallo,User" type="home" />
       {/* content container start*/}
       <View style={PageStyle.Content}>
         {/* Card Debt start */}

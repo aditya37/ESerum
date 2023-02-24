@@ -14,28 +14,36 @@ const UsecaseScanIot = props => {
 
   // _prepareCameraAndGetStateMQTT.....
   const _prepareCameraAndGetStateMQTT = () => {
-    // wait....
+    // wait or prepare camera....
+    setUseCaseState({
+      ..._useCaseState,
+      loadingCamera: true,
+    });
     setTimeout(() => {
+      // stop loading camera...
       setUseCaseState({
         ..._useCaseState,
         loadingCamera: false,
       });
-    }, 2000);
-    if (mqttinstance.isConnected()) {
-      const {register_uuid, uuid} = props.route.params;
-      if (register_uuid != null) {
-        mqttinstance._subscribe(
-          '/user/' + register_uuid + '/resp/device/pair',
-          0,
-        );
+      //  do subscribe response pair
+      if (mqttinstance.isConnected()) {
+        const {register_uuid, uuid} = props.route.params;
+        // subscribe resp pair if from register
+        if (register_uuid != null) {
+          mqttinstance._subscribe(
+            '/user/' + register_uuid + '/resp/device/pair',
+            0,
+          );
+        } else {
+          // subscribe resp pair if from login
+          mqttinstance._subscribe('/user/' + uuid + '/resp/device/pair', 0);
+        }
+        console.log('ready...');
       } else {
-        mqttinstance._subscribe('/user/' + uuid + '/resp/device/pair', 0);
+        crashlytics().log('not ready subscribe device pair');
+        console.log('not ready...');
       }
-      console.log('ready...');
-    } else {
-      crashlytics().log("not ready subscribe device pair")
-      console.log('not ready...');
-    }
+    }, 2000);
   };
 
   // parse qrcode value...
