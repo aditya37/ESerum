@@ -1,18 +1,18 @@
 import {StyleSheet} from 'react-native';
-
+import {horizontalScale, verticalScale} from '../../utils/dimension';
 const HomePageStyle = StyleSheet.create({
   Container: {flex: 1, flexDirection: 'column', backgroundColor: '#FFFFFF'},
   Content: {
     flexDirection: 'column',
-    left: 3,
-    top: 10,
+    marginLeft: 3,
+    marginTop: 10,
   },
   ContainerCard: {
-    top: 10,
+    marginTop: 10,
     backgroundColor: '#1A73E9E0',
     flexDirection: 'row',
-    width: 320,
-    height: 188,
+    width: horizontalScale(320),
+    height: verticalScale(188),
     marginLeft: 30,
     marginRight: 20,
     borderRadius: 5,
