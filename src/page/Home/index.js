@@ -7,6 +7,7 @@ import {HeaderBar, AlertDialog} from '../../component';
 import PageStyle from './PageStyle';
 import {GetDevicePair} from '../../redux/action/get_device_status';
 import homepageUsecase from './usecase';
+import {verticalScale} from '../../utils/dimension';
 
 const HomePage = props => {
   const {_getDevicePairStatus, _subscribeDeviceMonitoring, usecaseState} =
@@ -33,21 +34,16 @@ const HomePage = props => {
                 marginLeft: 30,
                 justifyContent: 'center',
                 alignItems: 'center',
+                flexDirection: 'column',
               }}>
               <Text
                 style={{
                   color: '#FFFFFF',
                   fontSize: 19,
                   fontWeight: '500',
+                  textAlign: 'center',
                 }}>
-                User Not Paired To IoT Device
-              </Text>
-              <Text
-                style={{
-                  color: '#FFFFFF',
-                  fontSize: 15,
-                }}>
-                Please Pair it..
+                User Not Paired To IoT Device Please Pair it..
               </Text>
             </View>
           ) : (

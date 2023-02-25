@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {useState, useRef} from 'react';
+import {verticalScale} from '../../utils/dimension';
 
 const IoTMonitoringCase = props => {
   // ref for gauge...
@@ -146,10 +147,9 @@ const IoTMonitoringCase = props => {
     return (
       <View
         style={{
-          justifyContent: 'center',
           alignItems: 'center',
           alignSelf: 'center',
-          marginTop: 300,
+          marginTop: verticalScale(300),
           flexDirection: 'column',
         }}>
         <ActivityIndicator
@@ -165,7 +165,14 @@ const IoTMonitoringCase = props => {
             fontStyle: 'normal',
           }}
         />
-        <Text style={{color: 'black', marginTop: 15}}>
+        <Text
+          style={{
+            color: 'black',
+            marginTop: verticalScale(20),
+            alignSelf: 'center',
+            textAlign: 'center',
+            height: verticalScale(40),
+          }}>
           Geting IoT Device Information
         </Text>
       </View>
