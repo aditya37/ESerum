@@ -30,7 +30,7 @@ const HomePage = props => {
           !props.stateGetDevicePair.is_paired_rfid ? (
             <View
               style={{
-                flex: 1,
+                marginLeft: 30,
                 justifyContent: 'center',
                 alignItems: 'center',
               }}>

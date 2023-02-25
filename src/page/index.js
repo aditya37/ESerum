@@ -6,6 +6,7 @@ import PairingRFIDPage from './PairingRFID';
 import HomePage from './Home';
 import IoTMonitoringPage from './IoTMonitoring';
 import DeviceDetailPage from './DeviceDetail';
+import AttachedSensorPage from './AttachedSensor';
 export {
   LoginPage,
   RegisterPage,
@@ -15,4 +16,5 @@ export {
   HomePage,
   IoTMonitoringPage,
   DeviceDetailPage,
+  AttachedSensorPage,
 };

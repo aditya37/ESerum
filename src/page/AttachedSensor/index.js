@@ -1,6 +1,10 @@
-import {useNavigation} from '@react-navigation/native';
-const DeviceDetailUseCase = props => {
-  const navigation = useNavigation();
+import {View, Dimensions} from 'react-native';
+import {FlatList} from 'react-native-gesture-handler';
+import {HeaderBar, SensorList} from '../../component';
+import pageStyle from './style';
+
+// TODO: Develop this...
+const AttachedSensorPage = props => {
   const DumyData = [
     {
       id: 1,
@@ -129,13 +133,53 @@ const DeviceDetailUseCase = props => {
       last_record: '2022-01-11',
       value: 1.22,
     },
+    {
+      id: 19,
+      sensor_name: 'DHT11',
+      sensor_type: 'TEMPERATURE',
+      last_record: '2022-01-11',
+      value: 1.22,
+    },
+    {
+      id: 20,
+      sensor_name: 'DHT11',
+      sensor_type: 'ELECTRICAL',
+      last_record: '2022-01-11',
+      value: 1.22,
+    },
   ];
-  const _showAllAttachedSensor = () => {
-    props.navigation.replace('attachedSensorPage');
-  };
-  return {
-    _showAllAttachedSensor,
-    DumyData,
-  };
+  return (
+    <View style={pageStyle.Container}>
+      <HeaderBar text="Attached Sensor" type="attached-sensor" />
+      {/* content */}
+      <View style={pageStyle.ContentConatainer}>
+        <View style={pageStyle.ContainerListSensor}>
+          {/* device list */}
+          <FlatList
+            scrollEnabled={true}
+            data={DumyData}
+            keyExtractor={item => item.id}
+            ItemSeparatorComponent={() => {
+              // separator
+              return (
+                <View style={{backgroundColor: '#DEDEDE', height: 2, top: 2}} />
+              );
+            }}
+            renderItem={val => (
+              <SensorList
+                sensor_name={val.item.sensor_name}
+                sensor_type={val.item.sensor_type}
+                last_record={val.item.last_record}
+                value={val.item.value}
+                onPress={e => {
+                  console.log('move', val.item.sensor_type);
+                }}
+              />
+            )}
+          />
+        </View>
+      </View>
+    </View>
+  );
 };
-export default DeviceDetailUseCase;
+export default AttachedSensorPage;

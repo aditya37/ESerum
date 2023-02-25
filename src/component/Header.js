@@ -97,7 +97,7 @@ const HeaderBar = props => {
             color: 'white',
             size: 30,
             onPress: () => {
-              navigation.navigate('deviceDetailPage');
+              navigation.navigate('navIotDevice');
             },
           }}
           centerComponent={{
@@ -108,6 +108,44 @@ const HeaderBar = props => {
               fontWeight: '500',
               fontStyle: 'normal',
               color: 'white',
+            },
+          }}
+        />
+      ) : (
+        ''
+      )}
+      {type == 'attached-sensor' ? (
+        <Header
+          placement="left"
+          containerStyle={{
+            backgroundColor: 'white',
+            borderBottomColor: 'white',
+          }}
+          leftComponent={{
+            icon: 'arrow-back',
+            color: 'black',
+            size: 30,
+            onPress: () => {
+              navigation.navigate('deviceDetailPage');
+            },
+          }}
+          rightComponent={{
+            icon: 'refresh',
+            color: 'black',
+            size: 30,
+            onPress: () => {
+              console.log('reload');
+            },
+          }}
+          centerComponent={{
+            text: props.text,
+            style: {
+              justifyContent:"center",
+              fontSize: 20,
+              fontFamily: 'Roboto',
+              fontWeight: '500',
+              fontStyle: 'normal',
+              color: 'black',
             },
           }}
         />

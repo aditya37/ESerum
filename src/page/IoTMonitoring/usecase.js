@@ -149,7 +149,7 @@ const IoTMonitoringCase = props => {
           justifyContent: 'center',
           alignItems: 'center',
           alignSelf: 'center',
-          top: 300,
+          marginTop: 300,
           flexDirection: 'column',
         }}>
         <ActivityIndicator
@@ -165,7 +165,7 @@ const IoTMonitoringCase = props => {
             fontStyle: 'normal',
           }}
         />
-        <Text style={{color: 'black', top: 15}}>
+        <Text style={{color: 'black', marginTop: 15}}>
           Geting IoT Device Information
         </Text>
       </View>

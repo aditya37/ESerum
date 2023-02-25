@@ -1,145 +1,11 @@
-import {
-  Text,
-  View,
-  StatusBar,
-  Image,
-  SafeAreaView,
-  ScrollView,
-} from 'react-native';
+import {Text, View, StatusBar, Image} from 'react-native';
 import {connect} from 'react-redux';
 import {HeaderBar, SensorList} from '../../component';
 import pageStyle from './style';
-import {FlatList} from 'react-native-gesture-handler';
+import {FlatList, TouchableOpacity} from 'react-native-gesture-handler';
+import DeviceDetailUseCase from './usecase';
 const DeviceDetailPage = props => {
-  const DumyData = [
-    {
-      id: 1,
-      sensor_name: 'DHT11',
-      sensor_type: 'TEMPERATURE',
-      last_record: '2022-01-11',
-      value: 1.22,
-    },
-
-    {
-      id: 2,
-      sensor_name: 'DHT11',
-      sensor_type: 'TEMPERATURE',
-      last_record: '2022-01-11',
-      value: 1.22,
-    },
-    {
-      id: 3,
-      sensor_name: 'DHT11',
-      sensor_type: 'TEMPERATURE',
-      last_record: '2022-01-11',
-      value: 1.22,
-    },
-    {
-      id: 4,
-      sensor_name: 'DHT11',
-      sensor_type: 'TEMPERATURE',
-      last_record: '2022-01-11',
-      value: 1.22,
-    },
-    {
-      id: 5,
-      sensor_name: 'DHT11',
-      sensor_type: 'TEMPERATURE',
-      last_record: '2022-01-11',
-      value: 1.22,
-    },
-    {
-      id: 6,
-      sensor_name: 'DHT11',
-      sensor_type: 'TEMPERATURE',
-      last_record: '2022-01-11',
-      value: 1.22,
-    },
-    {
-      id: 7,
-      sensor_name: 'DHT11',
-      sensor_type: 'TEMPERATURE',
-      last_record: '2022-01-11',
-      value: 1.22,
-    },
-    {
-      id: 8,
-      sensor_name: 'DHT11',
-      sensor_type: 'TEMPERATURE',
-      last_record: '2022-01-11',
-      value: 1.22,
-    },
-    {
-      id: 9,
-      sensor_name: 'DHT11',
-      sensor_type: 'TEMPERATURE',
-      last_record: '2022-01-11',
-      value: 1.22,
-    },
-    {
-      id: 10,
-      sensor_name: 'DHT11',
-      sensor_type: 'TEMPERATURE',
-      last_record: '2022-01-11',
-      value: 1.22,
-    },
-    {
-      id: 11,
-      sensor_name: 'DHT11',
-      sensor_type: 'TEMPERATURE',
-      last_record: '2022-01-11',
-      value: 1.22,
-    },
-    {
-      id: 12,
-      sensor_name: 'DHT11',
-      sensor_type: 'TEMPERATURE',
-      last_record: '2022-01-11',
-      value: 1.22,
-    },
-    {
-      id: 13,
-      sensor_name: 'DHT12',
-      sensor_type: 'ELECTRICAL',
-      last_record: '2022-01-11',
-      value: 1.22,
-    },
-    {
-      id: 14,
-      sensor_name: 'DHT11',
-      sensor_type: 'TEMPERATURE',
-      last_record: '2022-01-11',
-      value: 1.22,
-    },
-    {
-      id: 15,
-      sensor_name: 'DHT11',
-      sensor_type: 'TEMPERATURE',
-      last_record: '2022-01-11',
-      value: 1.22,
-    },
-    {
-      id: 16,
-      sensor_name: 'DHT11',
-      sensor_type: 'TEMPERATURE',
-      last_record: '2022-01-11',
-      value: 1.22,
-    },
-    {
-      id: 17,
-      sensor_name: 'DHT11',
-      sensor_type: 'TEMPERATURE',
-      last_record: '2022-01-11',
-      value: 1.22,
-    },
-    {
-      id: 18,
-      sensor_name: 'DHT11',
-      sensor_type: 'TEMPERATURE',
-      last_record: '2022-01-11',
-      value: 1.22,
-    },
-  ];
+  const {_showAllAttachedSensor, DumyData} = DeviceDetailUseCase(props);
 
   return (
     <View style={pageStyle.Container}>
@@ -180,12 +46,21 @@ const DeviceDetailPage = props => {
         <View style={pageStyle.AttachedSensorContainer}>
           <View style={pageStyle.AttachedSensorHeader}>
             <Text style={pageStyle.AttachedSensorText}>Attached Sensor</Text>
-            <Text style={pageStyle.ShowAllText}>Show All</Text>
+            <TouchableOpacity
+              onPress={() => _showAllAttachedSensor()}
+              style={pageStyle.ShowAllText}>
+              <Text
+                style={{
+                  color: 'blue',
+                  fontSize: 15,
+                  fontWeight: 'bold',
+                }}>
+                Show All
+              </Text>
+            </TouchableOpacity>
           </View>
           {/* list */}
-          <ScrollView
-            scrollEventThrottle={60}
-            style={pageStyle.ScrollViewSensorContainer}>
+          <View style={pageStyle.ScrollViewSensorContainer}>
             <FlatList
               scrollEnabled={true}
               data={DumyData}
@@ -210,7 +85,7 @@ const DeviceDetailPage = props => {
                 />
               )}
             />
-          </ScrollView>
+          </View>
         </View>
       </View>
     </View>

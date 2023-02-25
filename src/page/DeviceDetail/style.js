@@ -1,29 +1,29 @@
-import {StyleSheet} from 'react-native';
-
+import {StyleSheet, Dimensions} from 'react-native';
+import {horizontalScale, verticalScale} from '../../utils/dimension';
 const DeviceDetailPageStyle = StyleSheet.create({
   Container: {
     flex: 1,
     flexDirection: 'column',
     backgroundColor: '#FFFFFF',
   },
-  ContentContainer: {flexDirection: 'column', left: 3},
+  ContentContainer: {flexDirection: 'column', marginLeft: 3},
   DeviceDetailContainer: {
     backgroundColor: '#6C92F4',
     flexDirection: 'row',
-    width: 380,
-    height: 188,
+    width: Dimensions.get('window').width,
+    height: verticalScale(188),
     alignSelf: 'center',
   },
   DeviceQrCodeContainer: {
     flexDirection: 'column',
     alignItems: 'center',
-    left: 20,
-    top: 10,
+    left: horizontalScale(20),
+    marginTop: 10,
   },
   DeviceSpecContainer: {
     flexDirection: 'column',
-    left: 35,
-    top: 10,
+    marginLeft: 35,
+    marginTop: 10,
   },
   TextSensor: {
     color: 'white',
